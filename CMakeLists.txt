@@ -16,8 +16,8 @@ add_compile_options(-march=native)
 add_link_options(-flto)
 
 option(DEBUG "Compile in Debug mode" OFF)
-option(PROFILE, "Compile with profiling enabled" OFF)
-option(PARALLEL, "Compile with parallelism enabled" OFF)
+option(PROFILE "Compile with profiling enabled" OFF)
+option(PARALLEL "Compile with parallelism enabled" OFF)
 
 if (PARALLEL)
     add_compile_options(-DPARALLEL)
@@ -29,7 +29,7 @@ if (PARALLEL)
     link_directories("/usr/local/lib" "/usr/local/opt/llvm/lib")
 endif()
 
-if (COVERAGE)
+if (PROFILE)
     add_compile_options(-DDEBUG)
     add_compile_options(-O0)
     add_compile_options(-g)
@@ -53,8 +53,8 @@ endif()
 include(FetchContent)
 FetchContent_Declare(
   googletest
-  # Specify the commit you depend on and update it regularly.
-  URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        release-1.12.1
 )
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)

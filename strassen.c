@@ -900,7 +900,6 @@ void darray_view_partition(const darray_view *dv, darray_view **dv00,
   const ssize_t half_n_rows = n_rows / 2;
   const ssize_t half_n_cols = n_cols / 2;
 
-
   *dv00 = darray_view_new(dv->d, row_start, row_start + half_n_rows, col_start,
                           col_start + half_n_cols);
   *dv01 = darray_view_new(dv->d, row_start, row_start + half_n_rows,
@@ -1033,25 +1032,39 @@ void vectorized_cubic(const darray_view *dva, const darray_view *dvb,
   darray_view_partition(dvc, &C00, &C01, &C10, &C11);
   darray_view_partition(dvt, &T00, &T01, &T10, &T11);
 
-  assert((A00->row_end - A00->row_start + A10->row_end - A11->row_start) == (dva->row_end - dva->row_start));
-  assert((B00->row_end - B00->row_start + B10->row_end - B11->row_start) == (dvb->row_end - dvb->row_start));
-  assert((C00->row_end - C00->row_start + C10->row_end - C11->row_start) == (dvc->row_end - dvc->row_start));
-  assert((T00->row_end - T00->row_start + T10->row_end - T11->row_start) == (dvt->row_end - dvt->row_start));
-  assert((A00->col_end - A00->col_start + A01->col_end - A01->col_start) == (dva->col_end - dva->col_start));
-  assert((B00->col_end - B00->col_start + B01->col_end - B01->col_start) == (dvb->col_end - dvb->col_start));
-  assert((C00->col_end - C00->col_start + C01->col_end - C01->col_start) == (dvc->col_end - dvc->col_start));
-  assert((T00->col_end - T00->col_start + T01->col_end - T01->col_start) == (dvt->col_end - dvt->col_start));
+  assert((A00->row_end - A00->row_start + A10->row_end - A11->row_start) ==
+         (dva->row_end - dva->row_start));
+  assert((B00->row_end - B00->row_start + B10->row_end - B11->row_start) ==
+         (dvb->row_end - dvb->row_start));
+  assert((C00->row_end - C00->row_start + C10->row_end - C11->row_start) ==
+         (dvc->row_end - dvc->row_start));
+  assert((T00->row_end - T00->row_start + T10->row_end - T11->row_start) ==
+         (dvt->row_end - dvt->row_start));
+  assert((A00->col_end - A00->col_start + A01->col_end - A01->col_start) ==
+         (dva->col_end - dva->col_start));
+  assert((B00->col_end - B00->col_start + B01->col_end - B01->col_start) ==
+         (dvb->col_end - dvb->col_start));
+  assert((C00->col_end - C00->col_start + C01->col_end - C01->col_start) ==
+         (dvc->col_end - dvc->col_start));
+  assert((T00->col_end - T00->col_start + T01->col_end - T01->col_start) ==
+         (dvt->col_end - dvt->col_start));
 
-  assert((A01->row_end - A01->row_start + A11->row_end - A11->row_start) == (dva->row_end - dva->row_start));
-  assert((B01->row_end - B01->row_start + B11->row_end - B11->row_start) == (dvb->row_end - dvb->row_start));
-  assert((C01->row_end - C01->row_start + C11->row_end - C11->row_start) == (dvc->row_end - dvc->row_start));
-  assert((T01->row_end - T01->row_start + T10->row_end - T11->row_start) == (dvt->row_end - dvt->row_start));
-  assert((A10->col_end - A10->col_start + A11->col_end - A11->col_start) == (dva->col_end - dva->col_start));
-  assert((B10->col_end - B10->col_start + B11->col_end - B11->col_start) == (dvb->col_end - dvb->col_start));
-  assert((C10->col_end - C10->col_start + C11->col_end - C11->col_start) == (dvc->col_end - dvc->col_start));
-  assert((T10->col_end - T10->col_start + T11->col_end - T11->col_start) == (dvt->col_end - dvt->col_start));
-
-
+  assert((A01->row_end - A01->row_start + A11->row_end - A11->row_start) ==
+         (dva->row_end - dva->row_start));
+  assert((B01->row_end - B01->row_start + B11->row_end - B11->row_start) ==
+         (dvb->row_end - dvb->row_start));
+  assert((C01->row_end - C01->row_start + C11->row_end - C11->row_start) ==
+         (dvc->row_end - dvc->row_start));
+  assert((T01->row_end - T01->row_start + T10->row_end - T11->row_start) ==
+         (dvt->row_end - dvt->row_start));
+  assert((A10->col_end - A10->col_start + A11->col_end - A11->col_start) ==
+         (dva->col_end - dva->col_start));
+  assert((B10->col_end - B10->col_start + B11->col_end - B11->col_start) ==
+         (dvb->col_end - dvb->col_start));
+  assert((C10->col_end - C10->col_start + C11->col_end - C11->col_start) ==
+         (dvc->col_end - dvc->col_start));
+  assert((T10->col_end - T10->col_start + T11->col_end - T11->col_start) ==
+         (dvt->col_end - dvt->col_start));
 
 #pragma omp parallel default(none) shared(A00, B00) private(C00)
   vectorized_cubic(A00, B00, C00);
@@ -1140,6 +1153,6 @@ void darray_view_free_wrapper(darray_view **dv) {
   darray_view_free(*dv);
 #ifdef VERBOSE
   fprintf(stderr, GET_SUCCESS_TEXT("freed"));
-  fprintf(stderr, ": %p\n", (void *)*da);
+  fprintf(stderr, ": %p\n", (void *)*dv);
 #endif
 }

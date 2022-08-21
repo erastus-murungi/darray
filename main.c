@@ -59,14 +59,8 @@ int main() {
   // darray *dk d_autofree = darray_strip(
   //     de, (dims){.n_cols = NCOLS_1 - 2, .n_rows = NROWS_1 - 2});  // tall
 
-  double A[4][4] = {{1, 2, 3, 4}, 
-                    {1, 2, 1, 1}, 
-                    {1, 1, 3, 1}, 
-                    {1, 1, 1, 4}};
-  double B[4][4] = {{1, 1, 1, 1}, 
-                    {1, 1, 1, 1}, 
-                    {1, 1, 1, 1}, 
-                    {1, 1, 1, 1}};
+  double A[4][4] = {{1, 2, 3, 4}, {1, 2, 1, 1}, {1, 1, 3, 1}, {1, 1, 1, 4}};
+  double B[4][4] = {{1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}};
 
   darray *dA d_autofree = darray_new_initialized_from_doubles(4, 4, A);
   darray *dB d_autofree = darray_new_initialized_from_doubles(4, 4, B);
