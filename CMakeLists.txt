@@ -89,4 +89,8 @@ endforeach()
 
 
 add_custom_target(coverage
-                  COMMAND /usr/local/opt/llvm/bin/llvm-cov gcov "../build/CMakeFiles/strassen.dir/strassen.c.gcno")
+                  COMMAND /usr/local/opt/llvm/bin/llvm-cov gcov "./CMakeFiles/strassen.dir/*.gcno")
+add_custom_target(coverage-report
+        COMMAND /usr/local/opt/llvm/bin/llvm-cov show /path/to/your/binary -instr-profile=code.profdata /path/to/source_files/*.cpp -filename-equivalence -use-color --format html > /tmp/coverage.html)
+
+
