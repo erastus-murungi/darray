@@ -37,6 +37,10 @@ if (PROFILE)
     add_compile_options(-ftest-coverage)
     add_link_options(-fprofile-arcs)
     add_link_options(-ftest-coverage)
+    add_compile_options(-fprofile-instr-generate)
+    add_compile_options(-fcoverage-mapping)
+    add_link_options(-fprofile-instr-generate)
+    add_link_options(-fcoverage-mapping)
 elseif(DEBUG)
     add_compile_options(-DDEBUG)
     add_compile_options(-O0)
@@ -86,11 +90,3 @@ foreach(file ${tests})
   target_link_libraries("${name}_tests" gtest_main)
   add_test(NAME ${name} COMMAND "${name}_tests")
 endforeach()
-
-
-add_custom_target(coverage
-                  COMMAND /usr/local/opt/llvm/bin/llvm-cov gcov "./CMakeFiles/strassen.dir/*.gcno")
-add_custom_target(coverage-report
-        COMMAND /usr/local/opt/llvm/bin/llvm-cov show /path/to/your/binary -instr-profile=code.profdata /path/to/source_files/*.cpp -filename-equivalence -use-color --format html > /tmp/coverage.html)
-
-
